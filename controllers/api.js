@@ -2,17 +2,18 @@ const router = require("express").Router();
 const Workout = require("../models/workout.js");
 
 // pull info from db for the workouts page
+// after testing, realized the total duration field was undefined, so added field here and for "workouts/range" route
 router.get("/workouts", (req, res) => {
     Workout.aggregate([
         {
-          $addFields: {
-            "totalDuration":
-            {
-              $sum: "$exercises.duration"
+            $addFields: {
+                "totalDuration":
+                {
+                    $sum: "$exercises.duration"
+                }
             }
-          }
         }
-      ])
+    ])
         .then(data => {
             res.json(data);
         })
@@ -22,7 +23,16 @@ router.get("/workouts", (req, res) => {
 });
 
 router.get("/workouts/range", (req, res) => {
-    Workout.find({})
+    Workout.aggregate([
+        {
+            $addFields: {
+                "totalDuration":
+                {
+                    $sum: "$exercises.duration"
+                }
+            }
+        }
+    ])
         .then(data => {
             res.json(data);
         })
