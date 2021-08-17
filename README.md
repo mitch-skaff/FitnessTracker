@@ -5,3 +5,6 @@ This a full-stack application which utilizes MongoDB for the back-end data base 
 
 ## Demo
 ![homepage tracker](/assets/images/tracker.png)
+
+## Deployed Site
+https://tranquil-waters-91007.herokuapp.com/
