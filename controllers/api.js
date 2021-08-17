@@ -3,7 +3,16 @@ const Workout = require("../models/workout.js");
 
 // pull info from db for the workouts page
 router.get("/workouts", (req, res) => {
-    Workout.find({})
+    Workout.aggregate([
+        {
+          $addFields: {
+            "totalDuration":
+            {
+              $sum: "$exercises.duration"
+            }
+          }
+        }
+      ])
         .then(data => {
             res.json(data);
         })
