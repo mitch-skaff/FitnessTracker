@@ -22,6 +22,7 @@ router.get("/workouts", (req, res) => {
         })
 });
 
+// added functionality to sort aggregated db information "descending" and to limit to only 7 records
 router.get("/workouts/range", (req, res) => {
     Workout.aggregate([
         {
@@ -33,6 +34,8 @@ router.get("/workouts/range", (req, res) => {
             }
         }
     ])
+        .sort({ _id: -1 })
+        .limit(7)
         .then(data => {
             res.json(data);
         })
